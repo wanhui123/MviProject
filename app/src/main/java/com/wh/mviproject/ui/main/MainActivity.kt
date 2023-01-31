@@ -1,6 +1,5 @@
 package com.wh.mviproject.ui.main
 
-import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -10,14 +9,11 @@ import com.wh.mviproject.databinding.ActivityMainBinding
 import com.wh.mviproject.ui.main.fragment.*
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-    }
 
     override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
 
     override fun initViews() {
+        Log.d("", "initViews")
         binding.navView.setOnItemSelectedListener {
             Log.d("", "initViews: $it")
             when (it.itemId) {
@@ -29,9 +25,14 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
             true
         }
+
+        initViewPager()
     }
 
-    private fun switchFragment(position: Int) = binding.mainViewPager.setCurrentItem(position, true)
+    private fun switchFragment(position: Int) {
+        Log.d("", "switchFragment")
+        binding.mainViewPager.setCurrentItem(position, true)
+    }
 
     private fun initViewPager() {
         binding.mainViewPager.isUserInputEnabled = false

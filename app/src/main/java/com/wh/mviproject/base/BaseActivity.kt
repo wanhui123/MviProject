@@ -16,6 +16,7 @@ abstract class BaseActivity<T : ViewBinding>: AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = getViewBinding()
+        setContentView(_binding.root)
 
         initViews()
         initEvents()
