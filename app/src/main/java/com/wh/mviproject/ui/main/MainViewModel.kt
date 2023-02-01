@@ -18,6 +18,7 @@ class MainViewModel(private val homeRepo: HomeRepository) : BaseViewModel<MainSt
                 requestDataWithFlow(showLoading = true,
                     request = { homeRepo.requestWanData() },
                     successCallback = { data ->
+                        //获取到数据 改变UI状态
                         sendUiState {
                             copy(
                                 bannerUiState = BannerUiState.SUCCESS(

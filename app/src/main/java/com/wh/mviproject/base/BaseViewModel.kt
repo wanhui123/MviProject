@@ -16,6 +16,7 @@ abstract class BaseViewModel<UiState : IUiState, UiIntent : IUiIntent> : ViewMod
 
     protected abstract fun initUiState(): UiState
 
+    //改变界面状态
     protected fun sendUiState(copy: UiState.() -> UiState) {
         _uiStateFlow.update { copy(_uiStateFlow.value) }
     }
