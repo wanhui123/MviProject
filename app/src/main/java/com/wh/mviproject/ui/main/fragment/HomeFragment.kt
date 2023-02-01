@@ -53,25 +53,34 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
 
     override fun initDatas() {
         binding.button.setOnClickListener {
+            //获取Banner 意图
             mViewModel.sendUiIntent(MainIntent.GetBanner)
+            //获取详情 意图
             mViewModel.sendUiIntent(MainIntent.GetDetail(0))
         }
 
         lifecycleScope.launchWhenStarted {
+            //loading 显示
             mViewModel.loadUiIntentFlow.collect { state ->
                 Log.d(TAG, "loadUiStateFlow: $state")
                 when (state) {
-                    is LoadUiIntent.Error -> Log.d(TAG, state.msg)
+                    is LoadUiIntent.Error -> {
+                        Log.d(TAG, state.msg)
+                    }
                     is LoadUiIntent.ShowMainView -> {
                         binding.viewPager.isVisible = true
                         binding.recyclerView.isVisible = true
                         binding.button.isVisible = false
                     }
-                    is LoadUiIntent.Loading -> Log.d(TAG, "show loading")
+                    is LoadUiIntent.Loading -> {
+
+                        Log.d(TAG, "show loading  ${state.isShow}")
+                    }
                 }
             }
         }
         lifecycleScope.launchWhenStarted {
+            //banner数据
             mViewModel.uiStateFlow.map { it.bannerUiState }
                 .collect { bannerUiState ->
                     Log.d(TAG, "bannerUiState: $bannerUiState")
@@ -90,6 +99,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                 }
         }
         lifecycleScope.launchWhenStarted {
+            //detail数据
             mViewModel.uiStateFlow.map { it.detailUiState }
                 .collect { detailUiState ->
                     Log.d(TAG, "detailUiState: $detailUiState")
